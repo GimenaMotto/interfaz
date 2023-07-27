@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Oposiciones Arquitectos Madrid Facturación </title>
+</head>
+<body>
+  <h1>Cargar Archivo JSON</h1>
+  <input type="file" id="jsonFileInput">
+  <button onclick="loadJSON()">Cargar</button>
+
+  <script>
+    // Función para cargar el archivo JSON
+    function loadJSON() {
+      const fileInput = document.getElementById('jsonFileInput');
+      const file = fileInput.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(event) {
+          const jsonContent = event.target.result;
+          // Envía el contenido JSON al proceso principal (main.js)
+          window.ipcRenderer.send('load-json-file', jsonContent);
+        }
+
+        reader.readAsText(file);
+      }
+    }
+  </script>
+</body>
+</html>
