@@ -2,29 +2,104 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Oposiciones Arquitectos Madrid Facturación </title>
+  <title>Oposiciones Arquitectos Madrid Facturación</title>
+  <style>
+    /* Estilos para simular la consola */
+    #console {
+      background-color: #1E1E1E;
+      color: #FFFFFF;
+      font-family: monospace;
+      padding: 10px;
+      border: 1px solid #CCCCCC;
+      width: 80%;
+      height: 200px;
+      overflow-y: auto;
+      margin-top: 20px; /* Agrega espacio arriba de la consola */
+    }
+
+    /* Estilos para el contenedor principal */
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Estilos para los elementos del formulario */
+    label {
+      margin-top: 10px; /* Agrega espacio arriba de cada label */
+    }
+
+    input[type="number"],
+    input[type="file"],
+    button {
+      margin-top: 5px; /* Agrega espacio arriba de los input y el botón */
+    }
+
+    button {
+      padding: 8px 20px; /* Aumenta el tamaño del botón */
+    }
+
+    /* Estilos para colocar elementos uno al lado del otro */
+    .flex-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .flex-item {
+      margin-right: 10px; /* Agrega espacio entre elementos */
+    }
+  </style>
 </head>
 <body>
-  <h1>Cargar Archivo JSON</h1>
-  <input type="file" id="jsonFileInput">
-  <button onclick="loadJSON()">Cargar</button>
+  <div id="container">
+    <h3>Datos alumnos/as y última factura</h3>
+    <div class="flex-container">
+      <div class="flex-item">
+        <label for="lastNumberInput">Número de última factura:</label>
+        <input type="number" id="lastNumberInput" placeholder="Ingrese el número de factura">
+      </div>
+      <div class="flex-item">
+        <label for="jsonFileInput">Seleccione un archivo JSON:</label>
+        <input type="file" id="jsonFileInput">
+      </div>
+      <div class="flex-item">
+        <button onclick="loadData()">Cargar datos</button>
+      </div>
+    </div>
+
+    <!-- Elemento para simular la consola -->
+    <div id="console"></div>
+  </div>
 
   <script>
-    // Función para cargar el archivo JSON
-    function loadJSON() {
+    // Función para cargar el archivo JSON y el número de la última factura
+    function loadData() {
       const fileInput = document.getElementById('jsonFileInput');
       const file = fileInput.files[0];
+      const lastNumberInput = document.getElementById('lastNumberInput').value;
 
-      if (file) {
+      if (file && lastNumberInput !== '') {
         const reader = new FileReader();
 
         reader.onload = function(event) {
           const jsonContent = event.target.result;
-          // Envía el contenido JSON al proceso principal (main.js)
-          window.ipcRenderer.send('load-json-file', jsonContent);
+          const data = {
+            jsonContent: jsonContent,
+            lastNumberInput: lastNumberInput
+          };
+
+          // Envía el contenido JSON y el número de factura al proceso principal (main.js)
+          window.ipcRenderer.send('load-data', data);
+
+          // Mostrar el resultado en la consola personalizada
+          const consoleElement = document.getElementById('console');
+          const message = `Número de la última factura: ${lastNumberInput}\nDatos del JSON: ${jsonContent}`;
+          consoleElement.innerText = message;
         }
 
         reader.readAsText(file);
+      } else {
+        console.error('Error: Por favor, seleccione un archivo JSON y escriba el número de la última factura.');
       }
     }
   </script>
