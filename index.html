@@ -55,7 +55,7 @@
     <h3>Datos alumnos/as y última factura</h3>
     <div class="flex-container">
       <div class="flex-item">
-        <label for="lastNumberInput">Número de última factura:</label>
+        <label for="lastNumberInput">Número de factura inicial 20230</label>
         <input type="number" id="lastNumberInput" placeholder="Ingrese el número de factura">
       </div>
       <div class="flex-item">
@@ -69,8 +69,18 @@
 
     <!-- Elemento para simular la consola -->
     <div id="console"></div>
+
   </div>
 
+  <div class="flex-item">
+    <button onclick="selectDirectoryAndGeneratePDFs()">Generar PDFs</button> <!-- Botón para generar los PDFs -->
+  </div>
+
+      <!-- Botón para generar y guardar el Excel -->
+      <div class="flex-item">
+        <button onclick="generateExcel()">Generar lista</button>
+      </div>
+    </div>
   <script>
     // Función para cargar el archivo JSON y el número de la última factura
     function loadData() {
@@ -103,7 +113,17 @@
       }
     }
 
-    
+    // Nueva función para seleccionar directorio y generar los PDFs
+    function selectDirectoryAndGeneratePDFs() {
+      // Envía el evento para seleccionar el directorio antes de generar los PDFs
+      window.ipcRenderer.send('select-directory');
+    }
+
+      // Nueva función para generar y guardar el Excel
+      function generateExcel() {
+      // Envía el evento para generar la lista Excel
+      window.ipcRenderer.send('generate-excel-list');
+    }
   </script>
 </body>
 </html>
