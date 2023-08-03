@@ -84,12 +84,12 @@
   <script>
     // Función para cargar el archivo JSON y el número de la última factura
     function loadData() {
-      const fileInput = document.getElementById('jsonFileInput');
-      const file = fileInput.files[0];
-      const lastNumberInput = document.getElementById('lastNumberInput').value;
+      const fileInput = document.getElementById('jsonFileInput')
+      const file = fileInput.files[0]
+      const lastNumberInput = document.getElementById('lastNumberInput').value
 
       if (file && lastNumberInput !== '') {
-        const reader = new FileReader();
+        const reader = new FileReader()
 
         reader.onload = function(event) {
           const jsonContent = event.target.result;
@@ -99,30 +99,30 @@
           };
 
           // Envía el contenido JSON y el número de factura al proceso principal (main.js)
-          window.ipcRenderer.send('load-data', data);
+          window.ipcRenderer.send('load-data', data)
 
           // Mostrar el resultado en la consola personalizada
-          const consoleElement = document.getElementById('console');
-          const message = `Número de la última factura: ${lastNumberInput}\nDatos del JSON: ${jsonContent}`;
-          consoleElement.innerText = message;
+          const consoleElement = document.getElementById('console')
+          const message = `Número de la última factura: ${lastNumberInput}\nDatos del JSON: ${jsonContent}`
+          consoleElement.innerText = message
         }
 
-        reader.readAsText(file);
+        reader.readAsText(file)
       } else {
-        console.error('Error: Por favor, seleccione un archivo JSON y escriba el número de la última factura.');
+        console.error('Error: Por favor, seleccione un archivo JSON y escriba el número de la última factura.')
       }
     }
 
     // Nueva función para seleccionar directorio y generar los PDFs
     function selectDirectoryAndGeneratePDFs() {
       // Envía el evento para seleccionar el directorio antes de generar los PDFs
-      window.ipcRenderer.send('select-directory');
+      window.ipcRenderer.send('select-directory')
     }
 
       // Nueva función para generar y guardar el Excel
       function generateExcel() {
       // Envía el evento para generar la lista Excel
-      window.ipcRenderer.send('generate-excel-list');
+      window.ipcRenderer.send('generate-excel-list')
     }
   </script>
 </body>
