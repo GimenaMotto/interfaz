@@ -4,11 +4,12 @@ const url = require('url')
 const generarPDF = require('./generarPdf')
 const excel = require('exceljs')
 const { format } = require('date-fns')
-
+const nodemailer = require('nodemailer');
 
 let mainWindow
 let students = []
 let lastNumber = null // Variable para almacenar el número de factura
+let selectedDirectoryForEmails = null; // Variable para almacenar el directorio seleccionado para los correos
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -145,4 +146,8 @@ ipcMain.on('generate-excel-list', (event) => {
     console.error('Error al mostrar el diálogo de selección de directorio:', err)
   })
 })
+
+
+
+
 

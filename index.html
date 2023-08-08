@@ -52,7 +52,7 @@
 </head>
 <body>
   <div id="container">
-    <h3>Datos alumnos/as y última factura</h3>
+    <h3>Datos alumnos/as y facturas</h3>
     <div class="flex-container">
       <div class="flex-item">
         <label for="lastNumberInput">Número de factura inicial 20230</label>
@@ -80,6 +80,7 @@
       <div class="flex-item">
         <button onclick="generateExcel()">Generar lista</button>
       </div>
+   
     </div>
   <script>
     // Función para cargar el archivo JSON y el número de la última factura
@@ -124,6 +125,8 @@
       // Envía el evento para generar la lista Excel
       window.ipcRenderer.send('generate-excel-list')
     }
+
+ 
   </script>
 </body>
 </html>
