@@ -5,12 +5,37 @@ const { format } = require('date-fns')
 const pathToCalibri = './Calibri Regular.ttf'
 const pathToCalibriBold = './Calibri Bold.ttf'
 const pathToCalibriItalic = './Calibri Italic.ttf'
+const nodemailer = require('nodemailer')
+require('dotenv').config()
 
-// Función para generar PDF/facturas
-function generarPDF(students, lastNumber, selectedDirectory) {
+// Función para implementar el retraso
+function customDelay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
+  async function generarPDF(students, lastNumber, selectedDirectory) {
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user:'gimenapimba@gmail.com',
+            pass: process.env.PASSWORD,
+        },
+        tls: {
+            rejectUnauthorized: false,
+        },
+      });
+      
 
-  students.forEach((student, index) => {
+    const { es } = require('date-fns/locale');
 
+    // Obtener la fecha actual
+    const currentDate = new Date();
+    
+    // Configurar en español para el formato de fecha
+    const esLocale = es;
+
+    // students.forEach(async (student, index) => {
+        for (const [index, student] of students.entries()) {
     const doc = new PDFDocument();
     const currentNumber = lastNumber + index; // +1 en cada iteración
     const outputFileName = `${student.ALUMNO}_20230${currentNumber}.pdf`
@@ -103,16 +128,53 @@ function generarPDF(students, lastNumber, selectedDirectory) {
    
    // Finalizar el PDF
    doc.end()
+   
 
-    const message = `Factura ${currentNumber} generada y guardada para el alumno: ${student.ALUMNO}`
-    console.log(message)
+// Enviar correo si ENVIAR es "SI"
+if (student.ENVIAR === 'SI') {
+    const invoice = `${student.ALUMNO}_20230${currentNumber}.pdf`;
+    const recipient = student.EMAIL;
+    const subject = 'Factura Oposiciones Arquitectos';
+    const body = `Estimado/a ${student.ALUMNO}, adjunto encontrarás la factura correspondiente a ${format(
+      currentDate,
+      'MMMM',
+      { locale: esLocale }
+    )} de ${format(currentDate, 'yyyy')}.
+    Un saludo`;
+    const mailOptions = {
+      from: 'Gimena pruebas <gimenapimba@gmail.com>',
+      to: recipient,
+      subject: subject,
+      text: body,
+      attachments: [
+        {
+          filename: invoice,
+          path: path.join(selectedDirectory, invoice),
+        },
+      ],
+    };
 
-        // console.log al final del loop
-        if (index === students.length - 1) {
-          console.log('Facturas generadas y guardadas para todos los alumnos.')
-        }
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log(`Correo para el alumno: ${student.ALUMNO} enviado a ${student.EMAIL} adjuntando Factura ${currentNumber}`);
 
-  })
+
+      // Retraso de 15 segundos antes de enviar el siguiente correo
+      if (index < students.length - 1) {
+        await customDelay(15000);
+      }
+    } catch (error) {
+      console.error(`Error al enviar correo a ${student.ALUMNO}a la dirección ${student.EMAIL} no se ha enviado la factura${currentNumber}`, error);
+    }
+  }
+
+  const message = `Factura ${currentNumber} guardada para el alumno: ${student.ALUMNO}`;
+  console.log(message);
+
+  if (index === students.length - 1) {
+    console.log('FACTURAS GENERADAS Y GUARDADAS PARA TODOS LOS ALMUNOS/AS');
+  }
+}
 }
 
-module.exports = generarPDF
+module.exports = generarPDF;

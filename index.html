@@ -83,7 +83,7 @@
    
     </div>
   <script>
-    // Función para cargar el archivo JSON y el número de la última factura
+    // Función para cargar el archivo JSON y el número de la primer factura
     function loadData() {
       const fileInput = document.getElementById('jsonFileInput')
       const file = fileInput.files[0]
@@ -104,13 +104,13 @@
 
           // Mostrar el resultado en la consola personalizada
           const consoleElement = document.getElementById('console')
-          const message = `Número de la última factura: ${lastNumberInput}\nDatos del JSON: ${jsonContent}`
+          const message = `Número de la primer factura: ${lastNumberInput}\nDatos del JSON: ${jsonContent}`
           consoleElement.innerText = message
         }
 
         reader.readAsText(file)
       } else {
-        console.error('Error: Por favor, seleccione un archivo JSON y escriba el número de la última factura.')
+        console.error('Error: Por favor, seleccione un archivo JSON y escriba el número de la primer factura.')
       }
     }
 
