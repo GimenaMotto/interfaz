@@ -5,7 +5,7 @@
   <title>Oposiciones Arquitectos Madrid Facturación</title>
   <style>
     /* Estilos para simular la consola */
-    #console {
+    .console {
       background-color: #1E1E1E;
       color: #FFFFFF;
       font-family: monospace;
@@ -48,40 +48,49 @@
     .flex-item {
       margin-right: 10px; /* Agrega espacio entre elementos */
     }
+
+    .margin-button {
+      margin-top: 30px;
+  
+    
+    }
   </style>
 </head>
 <body>
   <div id="container">
     <h3>Datos alumnos/as y facturas</h3>
-    <div class="flex-container">
+    <div class="flex-container" style="justify-content: center;">
       <div class="flex-item">
-        <label for="lastNumberInput">Número de factura inicial 20230</label>
-        <input type="number" id="lastNumberInput" placeholder="Ingrese el número de factura">
+        <label for="lastNumberInput" style="margin-left: 40px; margin-top: 20px;" >Número de factura inicial 20230</label>
+        <input type="number" id="lastNumberInput" placeholder="Ingrese el número de factura" style="margin-left: 40px; margin-top: 10px;">
       </div>
       <div class="flex-item">
-        <label for="jsonFileInput">Seleccione un archivo JSON:</label>
-        <input type="file" id="jsonFileInput">
-      </div>
-      <div class="flex-item">
-        <button onclick="loadData()">Cargar datos</button>
+        <label for="jsonFileInput" style="margin-top: 20px;">Seleccione un archivo JSON:</label>
+        <input type="file" id="jsonFileInput" style="margin-top: 10px;">
       </div>
     </div>
-
-    <!-- Elemento para simular la consola -->
-    <div id="console"></div>
-
-  </div>
-
-  <div class="flex-item">
-    <button onclick="selectDirectoryAndGeneratePDFs()">Generar PDFs</button> <!-- Botón para generar los PDFs -->
-  </div>
-
-      <!-- Botón para generar y guardar el Excel -->
-      <div class="flex-item">
-        <button onclick="generateExcel()">Generar lista</button>
+      <div class="flex-item" style="text-align: left;">
+        <button onclick="loadData()" style="margin-right: 40px; margin-top: 20px;">Cargar datos</button>
       </div>
    
+
+    <!-- Elemento para simular la consola -->
+    <div id="console" class="console"></div>
+
+  </div>
+
+  <div class="margin-button">
+    <div class="flex-container" style="justify-content: center;">
+      <div class="flex-item">
+      <button onclick="selectDirectoryAndGeneratePDFs()" style="margin-left: 20px; margin-right: 20px;">Generar PDFs</button>
+      </div>
+
+     <div class="flex-item">
+      <button onclick="generateExcel()" style="margin-right: 20px; margin-left: 20px;">Generar lista</button>
+      </div>
     </div>
+ </div>
+
   <script>
     // Función para cargar el archivo JSON y el número de la primer factura
     function loadData() {
