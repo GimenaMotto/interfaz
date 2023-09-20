@@ -10,7 +10,7 @@ let mainWindow
 let students = []
 let lastNumber = null // Variable para almacenar el número de factura
 let selectedDirectoryForEmails = null; // Variable para almacenar el directorio seleccionado para los correos
-
+let dateInputGlobal = ''; // Variable global para almacenar la fecha
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -51,7 +51,7 @@ app.on('activate', () => {
 
 // para recibir el contenido JSON y el número de factura
 ipcMain.on('load-data', (event, data) => {
-  const { jsonContent, lastNumberInput } = data;
+  const { jsonContent, lastNumberInput, dateInput } = data;
 
   try {
     students = JSON.parse(jsonContent)
@@ -59,13 +59,17 @@ ipcMain.on('load-data', (event, data) => {
     // Almacena el número 
     lastNumber = parseInt(lastNumberInput, 10) // convierte el valor a entero si es necesario
     console.log('Número de la primer factura:', lastNumber)
+    console.log('Fecha:', dateInput); // Muestra la fecha en la consola
 
     console.log('Datos del JSON:', students) //muestra los datos en la consola
   } catch (error) {
     console.error('Error al procesar el JSON:', error)
   }
 })
-
+// para recibir la fecha desde el proceso de renderizado
+ipcMain.on('set-date-input-global', (event, dateInput) => {
+  dateInputGlobal = dateInput;
+});
 // mostrar el diálogo de selección de directorio al recibir el evento 'select-directory'
 ipcMain.on('select-directory', (event) => {
   dialog.showOpenDialog(mainWindow, {
@@ -75,7 +79,7 @@ ipcMain.on('select-directory', (event) => {
     if (!result.canceled && result.filePaths.length > 0) {
       const selectedDirectory = result.filePaths[0]
       if (students.length > 0 && lastNumber !== null) {
-        generarPDF(students, lastNumber, selectedDirectory) // Llamamos a la función para generar los PDFs
+        generarPDF(students, lastNumber, selectedDirectory, dateInputGlobal) // Llamamos a la función para generar los PDFs
       } else {
         console.error('Error: No se pueden generar los PDFs. Asegúrate de cargar los datos primero.')
       }
@@ -88,7 +92,7 @@ ipcMain.on('select-directory', (event) => {
 
 
 // para generar el archivo Excel con la lista de facturas
-function generarListaExcel(students, lastNumber, selectedDirectory) {
+function generarListaExcel(students, lastNumber, selectedDirectory, dateInputGlobal) {
   const workbook = new excel.Workbook()
   const worksheet = workbook.addWorksheet('Lista de Facturas')
 
@@ -104,7 +108,7 @@ function generarListaExcel(students, lastNumber, selectedDirectory) {
   // Agregar filas con los datos de cada alumno/factura
   students.forEach((student, index) => {
     const currentNumber = lastNumber + index
-    const fecha = format(new Date(), 'dd/MM/yyyy')
+    const fecha = dateInputGlobal
     const row = worksheet.addRow({
       num_factura: `${currentNumber}`,
       nombre_alumno: student.ALUMNO,
@@ -137,7 +141,7 @@ ipcMain.on('generate-excel-list', (event) => {
     if (!result.canceled && result.filePaths.length > 0) {
       const selectedDirectory = result.filePaths[0]
       if (students.length > 0 && lastNumber !== null) {
-        generarListaExcel(students, lastNumber, selectedDirectory)
+        generarListaExcel(students, lastNumber, selectedDirectory, dateInputGlobal)
       } else {
         console.error('Error: No se pueden generar los datos para la lista Excel. Asegúrate de cargar los datos primero.')
       }

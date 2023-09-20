@@ -13,7 +13,7 @@ function customDelay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
   
-  async function generarPDF(students, lastNumber, selectedDirectory) {
+  async function generarPDF(students, lastNumber, selectedDirectory, dateInput) {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -29,7 +29,7 @@ function customDelay(ms) {
     const { es } = require('date-fns/locale');
 
     // Obtener la fecha actual
-    const currentDate = new Date();
+    // const currentDate = new Date();
     
     // Configurar en español para el formato de fecha
     const esLocale = es;
@@ -42,8 +42,9 @@ function customDelay(ms) {
     const outputPath = path.join(selectedDirectory, outputFileName) // se guarda donde selecciona el usuario 
 
         //  fecha actual y formateo
-        const currentDate = new Date()
-        const formattedDate = format(currentDate, 'dd/MM/yyyy')
+        // const currentDate = new Date()
+        // const formattedDate = format(currentDate, 'dd/MM/yyyy')
+        const formattedDate = dateInput
     
     doc.pipe(fs.createWriteStream(outputPath))
 
@@ -77,7 +78,7 @@ function customDelay(ms) {
    doc.font(pathToCalibri).fontSize(11).fillColor('gray').text(`NIF: ${student.DNI}`, 70, 245)
    doc.font(pathToCalibriBold).fontSize(12).fillColor('black').text(`Num. Factura:  ${currentNumber}`,400, 245 )
    doc.font(pathToCalibri).fontSize(11).fillColor('gray').text(`${student.DIRECCION}`, 70, 265)
-   doc.font(pathToCalibriBold).fontSize(12).fillColor('black').text(`Fecha:  ${formattedDate}`, 400, 265)
+   doc.font(pathToCalibriBold).fontSize(12).fillColor('black').text(`Fecha:  ${dateInput}`, 400, 265)
    doc.font(pathToCalibri).fontSize(11).fillColor('gray').text(`${student.CODIGOPOSTAL} - ${student.CIUDAD} - ${student.PROVINCIA}`, 70, 285)
 
    // Concepto (palabra)
@@ -135,11 +136,7 @@ if (student.ENVIAR === 'SI') {
     const invoice = `${student.ALUMNO}_${currentNumber}.pdf`;
     const recipient = student.EMAIL;
     const subject = 'Factura Oposiciones Arquitectos';
-    const body = `Estimado/a ${student.ALUMNO}, adjunto encontrarás la factura correspondiente a ${format(
-      currentDate,
-      'MMMM',
-      { locale: esLocale }
-    )} de ${format(currentDate, 'yyyy')}.
+    const body = `Estimado/a ${student.ALUMNO}, adjunto encontrarás la factura correspondiente a ${dateInput}
     Un saludo`;
     const mailOptions = {
       from: 'Gimena pruebas <gimenapimba@gmail.com>',
