@@ -13,7 +13,7 @@ function customDelay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
   
-  async function generarPDF(students, lastNumber, selectedDirectory, dateInput) {
+  async function generarPDF(students, lastNumber, selectedDirectory, dateInput, monthInputGlobal) {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -45,6 +45,7 @@ function customDelay(ms) {
         // const currentDate = new Date()
         // const formattedDate = format(currentDate, 'dd/MM/yyyy')
         const formattedDate = dateInput
+   
     
     doc.pipe(fs.createWriteStream(outputPath))
 
@@ -136,8 +137,11 @@ if (student.ENVIAR === 'SI') {
     const invoice = `${student.ALUMNO}_${currentNumber}.pdf`;
     const recipient = student.EMAIL;
     const subject = 'Factura Oposiciones Arquitectos';
-    const body = `Estimado/a ${student.ALUMNO}, adjunto encontrarás la factura correspondiente a ${dateInput}
+    const body = `Estimado/a ${student.ALUMNO}, adjunto encontrarás la factura correspondiente a ${monthInputGlobal}
     Un saludo`;
+
+
+    
     const mailOptions = {
       from: 'Gimena pruebas <gimenapimba@gmail.com>',
       to: recipient,
@@ -168,6 +172,7 @@ if (student.ENVIAR === 'SI') {
   const message = `Factura ${currentNumber} guardada para el alumno: ${student.ALUMNO}`;
   console.log(message);
 
+
   if (index === students.length - 1) {
     console.log('FACTURAS GENERADAS Y GUARDADAS PARA TODOS LOS ALMUNOS/AS');
   }
@@ -175,5 +180,3 @@ if (student.ENVIAR === 'SI') {
 }
 
 module.exports = generarPDF;
-
-

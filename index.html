@@ -61,18 +61,27 @@
     <h3>Datos alumnos/as y facturas</h3>
     <div class="flex-container" style="justify-content: center;">
       <div class="flex-item">
-        <label for="lastNumberInput" style="margin-left: 40px; margin-top: 20px;" >Número de factura inicial </label>
-        <input type="number" id="lastNumberInput" placeholder="Ingrese el número de factura" style="margin-left: 40px; margin-top: 10px;">
+        <label for="lastNumberInput" style="margin-left: 40px; margin-top: 20px;" >Número de factura inicial:</label>
+        <input type="number" id="lastNumberInput" placeholder="Ingrese el número de factura" style="margin-top: 10px;">
       </div>
 
-      <label for="dateInput" style="margin-top: 20px;">Fecha de factura/s:</label>
-<input type="text" id="dateInput" style="margin-top: 10px;">
+      <div class="flex-item">
+      <label for="dateInput" style="margin-top: 20px;">Fecha:</label>
+      <input type="text" id="dateInput" style="margin-top: 10px;">
+      </div>
+
+      
+      <div class="flex-item">
+        <label for="monthInput" style="margin-top: 20px;">Mes de facturación:</label>
+        <input type="text" id="monthInput" style="margin-top: 10px;">
+        </div>
 
       <div class="flex-item">
         <label for="jsonFileInput" style="margin-top: 20px;">Seleccione un archivo JSON:</label>
         <input type="file" id="jsonFileInput" style="margin-top: 10px;">
       </div>
-    </div>
+
+      </div>
       <div class="flex-item" style="text-align: left;">
         <button onclick="loadData()" style="margin-right: 40px; margin-top: 20px;">Cargar datos</button>
       </div>
@@ -98,14 +107,18 @@
   <script>
    
     let dateInputGlobal = ''; // Variable global para almacenar la fecha
+    let monthInputGlobal = ''; // Variable global para almacenar el mes
+
   // Modifica la función loadData() para obtener la fecha del campo de entrada en index.html
 function loadData() {
   const fileInput = document.getElementById('jsonFileInput');
   const file = fileInput.files[0];
   const lastNumberInput = document.getElementById('lastNumberInput').value;
   const dateInput = document.getElementById('dateInput').value; // Obtiene la fecha del campo de entrada
+  const monthInput = document.getElementById('monthInput').value; // Obtiene el mes del campo de entrada
 
-  if (file && lastNumberInput !== '' && dateInput !== '') {
+
+  if (file && lastNumberInput !== '' && dateInput !== '' && monthInput !== '') {
     const reader = new FileReader();
 
     reader.onload = function(event) {
@@ -114,19 +127,25 @@ function loadData() {
         jsonContent: jsonContent,
         lastNumberInput: lastNumberInput,
         dateInput: dateInput, // Agrega la fecha al objeto de datos
+        monthInput: monthInput, // Agrega el mes al objeto de datos
       };
 
       dateInputGlobal = dateInput;
+      monthInputGlobal = monthInput;
+
       // Después de definir dateInputGlobal
-window.ipcRenderer.send('set-date-input-global', dateInputGlobal);
+     window.ipcRenderer.send('set-date-input-global', dateInputGlobal);
+     window.ipcRenderer.send('set-month-input-global', monthInputGlobal);
+
       // Envía el contenido JSON, el número de factura y la fecha al proceso principal (main.js)
       window.ipcRenderer.send('load-data', data);
 
       // Mostrar el resultado en la consola personalizada
       const consoleElement = document.getElementById('console');
-      const message = `Número de la primer factura: ${lastNumberInput}\nFecha: ${dateInput}\nDatos del JSON: ${jsonContent}`;
+      const message = `Número de la primer factura: ${lastNumberInput}\nFecha: ${dateInput}\nMes: ${monthInput}\nDatos del JSON: ${jsonContent}`;
       consoleElement.innerText = message;
     };
+  
 
     reader.readAsText(file);
   } else {
