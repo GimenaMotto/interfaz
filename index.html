@@ -67,7 +67,7 @@
 
       <div class="flex-item">
       <label for="dateInput" style="margin-top: 20px;">Fecha:</label>
-      <input type="text" id="dateInput" style="margin-top: 10px;">
+      <input type="date" id="dateInput" style="margin-top: 10px;">
       </div>
 
       
@@ -114,11 +114,15 @@ function loadData() {
   const fileInput = document.getElementById('jsonFileInput');
   const file = fileInput.files[0];
   const lastNumberInput = document.getElementById('lastNumberInput').value;
-  const dateInput = document.getElementById('dateInput').value; // Obtiene la fecha del campo de entrada
+  // const dateInput = document.getElementById('dateInput').value; // Obtiene la fecha del campo de entrada
+  const dateInput = document.getElementById('dateInput').valueAsDate; // Obtiene la fecha del campo de entrada como un objeto Date
   const monthInput = document.getElementById('monthInput').value; // Obtiene el mes del campo de entrada
 
 
   if (file && lastNumberInput !== '' && dateInput !== '' && monthInput !== '') {
+     // Formatea la fecha en el formato deseado (dd/mm/yyyy)
+     const formattedDate = dateInput.toLocaleDateString('es-ES');
+
     const reader = new FileReader();
 
     reader.onload = function(event) {
@@ -126,11 +130,11 @@ function loadData() {
       const data = {
         jsonContent: jsonContent,
         lastNumberInput: lastNumberInput,
-        dateInput: dateInput, // Agrega la fecha al objeto de datos
+        dateInput: formattedDate, // Usa la fecha formateada
         monthInput: monthInput, // Agrega el mes al objeto de datos
       };
 
-      dateInputGlobal = dateInput;
+      dateInputGlobal = formattedDate; // Actualiza la fecha global
       monthInputGlobal = monthInput;
 
       // Después de definir dateInputGlobal
