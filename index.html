@@ -118,7 +118,6 @@ function loadData() {
   const dateInput = document.getElementById('dateInput').valueAsDate; // Obtiene la fecha del campo de entrada como un objeto Date
   const monthInput = document.getElementById('monthInput').value; // Obtiene el mes del campo de entrada
 
-
   if (file && lastNumberInput !== '' && dateInput !== '' && monthInput !== '') {
      // Formatea la fecha en el formato deseado (dd/mm/yyyy)
      const formattedDate = dateInput.toLocaleDateString('es-ES');
@@ -137,6 +136,7 @@ function loadData() {
       dateInputGlobal = formattedDate; // Actualiza la fecha global
       monthInputGlobal = monthInput;
 
+    
       // Después de definir dateInputGlobal
      window.ipcRenderer.send('set-date-input-global', dateInputGlobal);
      window.ipcRenderer.send('set-month-input-global', monthInputGlobal);
@@ -146,7 +146,7 @@ function loadData() {
 
       // Mostrar el resultado en la consola personalizada
       const consoleElement = document.getElementById('console');
-      const message = `Número de la primer factura: ${lastNumberInput}\nFecha: ${dateInput}\nMes: ${monthInput}\nDatos del JSON: ${jsonContent}`;
+      const message = `Número de la primer factura: ${lastNumberInput}\nFecha: ${formattedDate}\nMes: ${monthInput}\nDatos del JSON: ${jsonContent}`;
       consoleElement.innerText = message;
     };
   
