@@ -17,7 +17,7 @@ function customDelay(ms) {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user:'gimenapimba@gmail.com',
+            user:'factura.oposicionesarquitectos@gmail.com',
             pass: process.env.PASSWORD,
         },
         tls: {
@@ -137,13 +137,19 @@ if (student.ENVIAR === 'SI') {
     const invoice = `${student.ALUMNO}_${currentNumber}.pdf`;
     const recipient = student.EMAIL;
     const subject = 'Factura Oposiciones Arquitectos';
-    const body = `Estimado/a ${student.ALUMNO}, adjunto encontrarás la factura correspondiente a ${monthInputGlobal}
-    Un saludo`;
+    const body = `Estimado/a ${student.ALUMNO}, adjunto encontrarás la factura correspondiente a ${monthInputGlobal}.
+    Un saludo.
+    
+    
+    
+    --
+* Por favor, no responda a este mensaje, ha sido enviado de forma automática. Si desea ponerse en contacto con nosotros para comentarnos alguna incidencia o mejora de este servicio, por favor, escríbanos a ealvaro@oposicionesarquitectos.com
+`;
 
 
     
     const mailOptions = {
-      from: 'Gimena pruebas <gimenapimba@gmail.com>',
+      from: 'Facturacion Oposiciones Arquitectos <facturacion@oposicionesarquitectos.com>',
       to: recipient,
       subject: subject,
       text: body,
