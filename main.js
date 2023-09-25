@@ -14,17 +14,32 @@ let dateInputGlobal = ''; // Variable global para almacenar la fecha
 let monthInputGlobal = ''; // Variable global para almacenar el mes
 
 function createWindow() {
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      enableRemoteModule: false,
-      preload: path.join(__dirname, 'preload.js')
-    },
-    autoHideMenuBar: true,
-  })
+//   mainWindow = new BrowserWindow({
+//     width: 800,
+//     height: 600,
+//     webPreferences: {
+//       nodeIntegration: false,
+//       contextIsolation: true,
+//       enableRemoteModule: false,
+//       preload: path.join(__dirname, 'preload.js')
+//     },
+//     autoHideMenuBar: true,
+//   })
+
+const { width, height } = require('electron').screen.getPrimaryDisplay().workAreaSize;
+
+mainWindow = new BrowserWindow({
+  width: width,
+  height: height,
+  webPreferences: {
+    nodeIntegration: false,
+    contextIsolation: true,
+    enableRemoteModule: false,
+    preload: path.join(__dirname, 'preload.js')
+  },
+   autoHideMenuBar: true,
+  fullscreen: false, // Agrega esta línea para activar el modo de pantalla completa
+})
 
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),

@@ -36,7 +36,8 @@
     }
 
     button {
-      padding: 8px 20px; /* Aumenta el tamaño del botón */
+      padding: 12px 27px; /* Aumenta el tamaño del botón */
+      font-size: 16px;
     }
 
     /* Estilos para colocar elementos uno al lado del otro */
@@ -58,27 +59,27 @@
 </head>
 <body>
   <div id="container">
-    <h3>Datos alumnos/as y facturas</h3>
+    <h2>Datos alumnos/as y facturas</h2>
     <div class="flex-container" style="justify-content: center;">
       <div class="flex-item">
-        <label for="lastNumberInput" style="margin-left: 40px; margin-top: 20px;" >Número de factura inicial:</label>
-        <input type="number" id="lastNumberInput" placeholder="Ingrese el número de factura" style="margin-top: 10px;">
+        <label for="lastNumberInput" style="margin-left: 40px; margin-top: 20px; font-size: 18px;" >Número de factura inicial:</label>
+        <input type="number" id="lastNumberInput" placeholder="Ingrese el número de factura" style="margin-top: 10px; padding: 7px;">
       </div>
 
       <div class="flex-item">
-      <label for="dateInput" style="margin-top: 20px;">Fecha:</label>
-      <input type="date" id="dateInput" style="margin-top: 10px;">
+      <label for="dateInput" style="margin-top: 20px; font-size: 18px;">Fecha:</label>
+      <input type="date" id="dateInput" style="margin-top: 10px; padding: 7px;">
       </div>
 
       
       <div class="flex-item">
-        <label for="monthInput" style="margin-top: 20px;">Mes de facturación:</label>
-        <input type="text" id="monthInput" style="margin-top: 10px;">
+        <label for="monthInput" style="margin-top: 20px; font-size: 18px;">Mes de facturación:</label>
+        <input type="text" id="monthInput" style="margin-top: 10px; padding: 7px;">
         </div>
 
       <div class="flex-item">
-        <label for="jsonFileInput" style="margin-top: 20px;">Seleccione un archivo JSON:</label>
-        <input type="file" id="jsonFileInput" style="margin-top: 10px;">
+        <label for="jsonFileInput" style="margin-top: 20px; font-size: 18px;">Seleccione un archivo JSON:</label>
+        <input type="file" id="jsonFileInput" style="margin-top: 10px; padding: 10px;">
       </div>
 
       </div>
@@ -95,7 +96,7 @@
   <div class="margin-button">
     <div class="flex-container" style="justify-content: center;">
       <div class="flex-item">
-      <button onclick="selectDirectoryAndGeneratePDFs()" style="margin-left: 20px; margin-right: 20px;">Generar PDFs</button>
+      <button onclick="selectDirectoryAndGeneratePDFs()" style="margin-left: 20px; margin-right: 20px;">Generar y enviar facturas</button>
       </div>
 
      <div class="flex-item">
