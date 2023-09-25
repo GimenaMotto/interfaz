@@ -4,17 +4,21 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist": "electron-builder"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
-    "electron": "^25.3.1",
-    "electron-dialog": "^2.0.0",
     "exceljs": "^4.3.0",
     "nodemailer": "^6.9.4",
     "pdfkit": "^0.13.0"
+  },
+  "devDependencies": {
+    "electron": "^25.3.1",
+    "electron-builder": "^24.6.4"
   }
 }
