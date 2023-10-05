@@ -18,7 +18,7 @@ function customDelay(ms) {
         service: 'gmail',
         auth: {
             user:'factura.oposicionesarquitectos@gmail.com',
-            pass: process.env.PASSWORD,
+            pass:'',
         },
         tls: {
             rejectUnauthorized: false,
