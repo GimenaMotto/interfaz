@@ -18,7 +18,7 @@ function customDelay(ms) {
         service: 'gmail',
         auth: {
             user:'factura.oposicionesarquitectos@gmail.com',
-            pass:'',
+            pass: process.env.PASSWORD,
         },
         tls: {
             rejectUnauthorized: false,
@@ -28,8 +28,7 @@ function customDelay(ms) {
 
     const { es } = require('date-fns/locale');
 
-    // Obtener la fecha actual
-    // const currentDate = new Date();
+  
     
     // Configurar en español para el formato de fecha
     const esLocale = es;
@@ -40,10 +39,8 @@ function customDelay(ms) {
     const currentNumber = lastNumber + index; // +1 en cada iteración
     const outputFileName = `${student.ALUMNO}_${currentNumber}.pdf`
     const outputPath = path.join(selectedDirectory, outputFileName) // se guarda donde selecciona el usuario 
-
-        //  fecha actual y formateo
-        // const currentDate = new Date()
-        // const formattedDate = format(currentDate, 'dd/MM/yyyy')
+    
+//formatear fecha
         const formattedDate = dateInput
    
     
