@@ -1,0 +1,16 @@
+appId: com.oposicionesarquitectos.facturacion
+productName: Facturación Oposiciones Arquitectos
+directories:
+  output: './dist'
+  buildResources: './build'
+files:
+  - '**/*'
+  - '!node_modules/*'
+win:
+ 
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  perMachine: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true

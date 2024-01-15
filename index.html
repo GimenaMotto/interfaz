@@ -53,13 +53,42 @@
     .margin-button {
       margin-top: 30px;
   
-    
     }
+
+       
+    button {
+      background-color: #555555;;
+      color: #f8f8f8;
+      border: 1px solid #555555;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2c2c2c;
+      border: 1px solid #2c2c2c;
+    }
+
+    .console {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #1E1E1E;
+  color: #FFFFFF;
+  font-family: monospace;
+  padding: 10px;
+  border: 1px solid #CCCCCC;
+  width: 60%;
+  height: 300px;
+  overflow-y: auto;
+  margin: 20px auto; 
+}
+
   </style>
 </head>
 <body>
   <div id="container">
-    <h2>Datos alumnos/as y facturas</h2>
+    <h2>DATOS ALUMNOS/AS Y FACTURAS</h2>
     <div class="flex-container" style="justify-content: center;">
       <div class="flex-item">
         <label for="lastNumberInput" style="margin-left: 40px; margin-top: 20px; font-size: 18px;" >Número de factura inicial:</label>
