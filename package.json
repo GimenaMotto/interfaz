@@ -6,22 +6,26 @@
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "electron-builder"
+    "build": "electron-builder",
+    "dist": "electron-builder"
   },
-  "author": "",
+  "author": "Gimena Motto",
   "license": "ISC",
   "dependencies": {
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "exceljs": "^4.3.0",
-    "google-auth-library": "^9.1.0",
-    "nodemailer": "^6.9.5",
+    "nodemailer": "^6.6.0",
     "nodemailer-smtp-transport": "^2.7.4",
+
     "pdfkit": "^0.13.0"
   },
   "devDependencies": {
     "electron": "^25.3.1",
-    "electron-builder": "^24.9.1",
-    "electron-packager": "^14.0.0"
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.oposicionesArquitectos.tuapp",
+    "productName": "facturación"
   }
 }
